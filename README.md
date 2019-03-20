@@ -5,10 +5,14 @@
 
 > PWA-Vue极简音乐应用
 <a href="https://workboxjs.org">
-<br>
 <img src="https://my20889938-1255793964.cos.ap-chengdu.myqcloud.com/ucraft-music/Workbox-Logo-Grey.svg" alt="workbox" width="10%" ></a>
+
+<a href="https://app.gitkraken.com/glo/board/XIdfqsaIEAAP9jn7">
+<img src="https://my20889938-1255793964.cos.ap-chengdu.myqcloud.com/ucraft-music/Glo.svg" alt="Glo" width="13%"  ></a>
+
 <br>
 <br>
+
   <a href="https://github.com/vuejs/vue-cli"><img src="https://img.shields.io/badge/vue--cli-v2.9.2-green.svg" alt="vue-cli"></a>
   <a href="https://github.com/vuejs/vue"><img src="https://img.shields.io/badge/vue-v2.5.2-green.svg" alt="Vue"></a>
   <a href="https://github.com/vuejs/vuex"><img src="https://img.shields.io/badge/vuex-v3.0.1-green.svg" alt="vuex"></a>
@@ -19,7 +23,6 @@
 
 
 ## 在线演示
-
 
 [Code by XHY HT](https://github.com/ioslides) | [Design by XHY YLX HT](https://github.com/ioslides)
 --- | ---
