@@ -16,3 +16,16 @@ export function topList(idx) {
         }
     })
 }
+//推荐歌单
+export function getPersonalized() {
+    return axios.get('/personalized')
+}
+
+// 歌单详情
+export function getPlaylistDetail(id) {
+    return axios.get('/playlist/detail', {
+        params: {
+            id
+        }
+    })
+}
