@@ -31,6 +31,6 @@ const uPlayerMusic = {
    
         }
     }
-};
+}; 
 
 export default uPlayerMusic
