@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>uCraft Music Player</title>
+    <% if(htmlWebpackPlugin.options.env.NODE_ENV === '"production"'){ %>
+    <script>
+        //Google Analysis
+    </script>
+    <% } %>
+</head>
+<body>
+    <div id="appLoading">
+        <img src="./static/loading.gif" alt="loading"/>
+    </div>
+    <div id="uPlayer"></div>
+</body>
+</html>
