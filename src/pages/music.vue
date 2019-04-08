@@ -56,7 +56,6 @@ import MusicBtn from "components/ubtn/ubtn";
 import ucraftLyric from "components/lyric/lyric";
 import ucraftProgress from "base/uprogress/uprogress";
 import ucraftDialog from "base/udialog/udialog";
-
 export default {
   name: "music",
   components: {
