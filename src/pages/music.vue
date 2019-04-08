@@ -99,7 +99,22 @@ export default {
     ])
   },
   watch: {
-    currentMusic(newMusic, oldMusic) {},
+    currentMusic(newMusic, oldMusic) {
+      if (!newMusic.id) {
+        this.lyric = [];
+        return;
+      }
+      if (newMusic.id === oldMusic.id) {
+        return;
+      }
+      this.audioEle.src = newMusic.url;
+      //重置相关参数
+      this.lyricIndex = this.currentTime = this.percentMusic = this.currentProgress = 0;
+      this.audioEle.play();
+      this.$nextTick(() => {
+        this._getLyric(newMusic.id);
+      });
+    },
     playing(newPlaying) {},
     currentTime(newTime) {}
   },
