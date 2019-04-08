@@ -53,14 +53,14 @@ import { randomSortArray, parseLyric, format } from "assets/js/util";
 import { playMode, defaultBG } from "@/config";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import MusicBtn from "components/ubtn/ubtn";
-import Lyric from "components/lyric/lyric";
+import ucraftLyric from "components/lyric/lyric";
 import ucraftProgress from "base/uprogress/uprogress";
 import ucraftDialog from "base/udialog/udialog";
 
 export default {
   name: "music",
   components: {
-    Lyric,
+    ucraftLyric,
     MusicBtn,
     ucraftDialog,
     ucraftProgress
@@ -99,7 +99,22 @@ export default {
     ])
   },
   watch: {
-    currentMusic(newMusic, oldMusic) {},
+    currentMusic(newMusic, oldMusic) {
+      if (!newMusic.id) {
+        this.lyric = [];
+        return;
+      }
+      if (newMusic.id === oldMusic.id) {
+        return;
+      }
+      this.audioEle.src = newMusic.url;
+      //重置相关参数
+      this.lyricIndex = this.currentTime = this.percentMusic = this.currentProgress = 0;
+      this.audioEle.play();
+      this.$nextTick(() => {
+        this._getLyric(newMusic.id);
+      });
+    },
     playing(newPlaying) {},
     currentTime(newTime) {}
   },
