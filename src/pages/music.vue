@@ -52,7 +52,7 @@ import uPlayerMusic from "./ucraftPlayer";
 import { randomSortArray, parseLyric, format } from "assets/js/util";
 import { playMode, defaultBG } from "@/config";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import MusicBtn from "components/ubtn/ubtn";
+import ucraftMusicBtn from "components/ubtn/ubtn";
 import ucraftLyric from "components/lyric/lyric";
 import ucraftProgress from "base/uprogress/uprogress";
 import ucraftDialog from "base/udialog/udialog";
@@ -61,7 +61,7 @@ export default {
   name: "music",
   components: {
     ucraftLyric,
-    MusicBtn,
+    ucraftMusicBtn,
     ucraftDialog,
     ucraftProgress
   },
@@ -129,7 +129,12 @@ export default {
     //上一曲
     prev() {},
     //播放暂停
-    play() {},
+    play() {
+        if (!this.musicReady) {
+            return
+            }
+        this.setPlaying(!this.playing)
+    },
     //下一曲
     next() {},
     //循环
