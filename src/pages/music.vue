@@ -31,7 +31,7 @@
                 <i class="bar-icon btn-next"
                    title="下一曲 Ctrl + Right"
                    @click="next"></i>
-            </div>
+            </div> 
             <div class="music-music">
                 <div class="music-bar-info">
                     <template v-if="currentMusic&&currentMusic.id">
