@@ -192,6 +192,36 @@
         methods: {
             //按键事件
             initKeyDown() {
+                document.onkeydown = e => {
+                    switch (e.ctrlKey && e.keyCode) {
+                        case 32://播放暂停Ctrl + Space
+                            this.play();
+                            break;
+                        case 37://上一曲Ctrl + Left
+                            this.prev();
+                            break;
+                        case 38://音量加Ctrl + Up
+                            let plus = Number((this.volume += 0.1).toFixed(1));
+                            if (plus > 1) {
+                                plus = 1
+                            }
+                            this.volumeChange(plus);
+                            break;
+                        case 39://下一曲Ctrl + Right
+                            this.next();
+                            break;
+                        case 40://音量减Ctrl + Down
+                            let reduce = Number((this.volume -= 0.1).toFixed(1));
+                            if (reduce < 0) {
+                                reduce = 0
+                            }
+                            this.volumeChange(reduce);
+                            break;
+                        case 79://切换播放模式Ctrl + O
+                            this.modeChange();
+                            break
+                    }
+                }
             },
             //上一曲
             prev() {
@@ -245,6 +275,12 @@
             },
             //循环
             loop() {
+                this.audioEle.currentTime = 0;
+                this.audioEle.play();
+                this.setPlaying(true);
+                if (this.lyric.length > 0) {
+                    this.lyricIndex = 0
+                }
             },
             //修改音乐进度
             progressMusic(percent) {
@@ -252,21 +288,64 @@
             },
             //切换播放顺序
             modeChange() {
+                const mode = (this.mode + 1) % 4;
+                this.setPlayMode(mode);
+                if (mode === playMode.loop) {
+                    return
+                }
+                let list = [];
+                switch (mode) {
+                    case playMode.listLoop:
+                    case playMode.order:
+                        list = this.orderList;
+                        break;
+                    case playMode.random:
+                        list = randomSortArray(this.orderList);
+                        break
+                }
+                this.resetCurrentIndex(list);
+                this.setPlaylist(list);
             },
             // 修改当前歌曲索引
             resetCurrentIndex(list) {
+                const index = list.findIndex(item => {
+                    return item.id === this.currentMusic.id
+                });
+                this.setCurrentIndex(index)
             },
             //打开音乐评论
             openComment() {
+                if (!this.currentMusic.id) {
+                    this.$uToast('还没有播放歌曲哦！');
+                    return false
+                }
+                this.$router.push(`/music/comment/${this.currentMusic.id}`)
             },
             //修改音量大小
             volumeChange(percent) {
+                percent === 0 ? this.isMute = true : this.isMute = false;
+                this.volume = percent;
+                this.audioEle.volume = percent;
             },
             //是否静音
             switchMute() {
+                const audio = this.audioEle;
+                this.isMute = !this.isMute;
+                this.isMute ? audio.volume = 0 : audio.volume = this.volume
             },
             //获取歌词
             _getLyric(id) {
+                getLyric(id).then((res) => {
+                    if (res.status === 200) {
+                        if (res.data.nolyric) {
+                            this.nolyric = true
+                        } else {
+                            this.nolyric = false;
+                            this.lyric = parseLyric(res.data.lrc.lyric)
+                        }
+                        this.audioEle.play();
+                    }
+                })
             },
             ...mapMutations({
                 setPlaying: 'SET_PLAYING',
