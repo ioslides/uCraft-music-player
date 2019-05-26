@@ -1,23 +1,24 @@
 <template>
+    <!--我听过的（播放历史）-->
     <div class="historyList">
-        <ucraftMusicList :list="historyList" :listType="1" @select="selectItem" @del="deleteItem">
+        <music-list :list="historyList" :listType="1" @select="selectItem" @del="deleteItem">
             <div slot="listBtn" class="list-btn">
                 <span @click="$refs.dialog.show()">清空列表</span>
             </div>
-        </ucraftMusicList>
+        </music-list>
         <ucraftDialog ref="dialog" @confirm="clearList" bodyText="是否清空播放历史列表" confirmBtnText="清空"/>
     </div>
 </template>
 
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
-    import ucraftMusicList from 'components/musiclist/musiclist'
+    import MusicList from 'components/music-list/music-list'
     import ucraftDialog from 'base/udialog/udialog'
     
     export default {
         name: "history-list",
         components: {
-            ucraftMusicList,
+            MusicList,
             ucraftDialog
         },
         computed: {

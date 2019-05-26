@@ -1,7 +1,7 @@
 <template>
     <!--搜索-->
     <div class="search">
-        <ucraftLoading v-model="ucraftLoadShow" />
+        <uloading v-model="uLoadShow" />
         <div class="search-head">
             <span v-for="(item,index) in Artists.slice(0,5)"
                   :key="index"
@@ -12,7 +12,7 @@
                    v-model.trim="searchValue"
                    @keyup.enter="onEnter">
         </div>
-        <ucraftMusicList ref="musicList"
+        <music-list ref="musicList"
                     :list="list"
                     :listType="2"
                     @select="selectItem"
@@ -25,15 +25,15 @@
     import {search, searchHot, getMusicDetail} from 'api'
     import formatSongs from 'assets/js/song'
     import ucraftLoading from 'base/uloading/uloading'
-    import ucraftMusicList from 'components/musiclist/musiclist'
-    import {loadState} from "assets/js/loadstate";
+    import MusicList from 'components/music-list/music-list'
+    import {loadMixin} from "assets/js/mixin";
     
     export default {
         name: "search",
-        mixins: [loadState],
+        mixins: [loadMixin],
         components: {
             ucraftLoading,
-            ucraftMusicList
+            MusicList
         },
         data() {
             return {
@@ -64,7 +64,7 @@
             .then(res => {
                 if (res.data.code === 200) {
                     this.Artists = res.data.result.hots;
-                    this.ucraftLoadShow = false
+                    this.uLoadShow = false
                 }
             })
         },
@@ -80,7 +80,7 @@
                     this.$uToast('搜索内容不能为空！');
                     return
                 }
-                this.ucraftLoadShow = true;
+                this.uLoadShow = true;
                 this.page = 0;
                 if (this.list.length > 0) {
                     this.$refs.musicList.scrollTo();
@@ -95,14 +95,14 @@
             },
             //滚动加载事件
             pullUpLoad() {
-                this.ucraftLoadShow = true;
+                this.uLoadShow = true;
                 this.page += 1;
                 search(this.searchValue, this.page)
                 .then(res => {
                     if (res.data.code === 200) {
                         if (!res.data.result.songs) {
                             this.$uToast('没有更多歌曲啦！');
-                            this.ucraftLoadShow = false;
+                            this.uLoadShow = false;
                             return
                         }
                         this.list = [...this.list, ...formatSongs(res.data.result.songs)];

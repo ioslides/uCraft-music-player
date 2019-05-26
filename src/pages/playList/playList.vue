@@ -1,7 +1,7 @@
 <template>
     <!--正在播放-->
     <div class="playList">
-        <ucraftMusicList :list="playlist"
+        <music-list :list="playlist"
                     :listType="1"
                     @select="selectItem"
                     @del="deleteItem">
@@ -9,8 +9,8 @@
                  class="list-btn">
                 <span @click="$refs.dialog.show()">清空列表</span>
             </div>
-        </ucraftMusicList>
-        <ucraftDialog ref="dialog"
+        </music-list>
+        <udialog ref="dialog"
                    @confirm="clearList"
                    bodyText="是否清空正在播放列表"
                    confirmBtnText="清空" />
@@ -19,7 +19,7 @@
 
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
-    import ucraftMusicList from 'components/musiclist/musiclist'
+    import MusicList from 'components/music-list/music-list'
     import ucraftDialog from 'base/udialog/udialog'
     
     export default {
@@ -30,7 +30,7 @@
             }
         },
         components: {
-            ucraftMusicList,
+            MusicList,
             ucraftDialog
         },
         computed: {

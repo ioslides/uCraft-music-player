@@ -1,7 +1,7 @@
 <template>
     <!--我的歌单-->
     <div class="userList">
-        <ucarftLoading v-model="uLoadShow"/>
+        <uloading v-model="uLoadShow"/>
         <template v-if="list.length>0">
             <div class="list-item" v-for="item in list" v-if="item.trackCount>0" :key="item.id" :title="item.name">
                 <router-link :to="{path:`/music/details/${item.id}`}" tag="div" class="userList-item">
@@ -10,20 +10,22 @@
                 </router-link>
             </div>
         </template>
-        <ucarftNoResult v-else title="none"/>
+        <unoresult v-else title="啥也没有哦，快去登录看看吧！"/>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
+    
     import {getUserPlaylist} from 'api'
-    import {loadState} from "assets/js/loadstate"
-    import ucraftLoading from 'base/uloading/uloading'
+    import {loadMixin} from "assets/js/mixin"
+    
+    import ucarftLoading from 'base/uloading/uloading'
     import ucarftNoResult from 'base/unoresult/unoresult'
     
     export default {
         name: "play-list",
-        mixins: [loadState],
+        mixins: [loadMixin],
         components: {
             ucraftLoading,
             ucarftNoResult
